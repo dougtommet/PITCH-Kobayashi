@@ -1,0 +1,670 @@
+Mplus VERSION 8.1 (Mac)
+MUTHEN & MUTHEN
+04/23/2020  10:56 PM
+
+INPUT INSTRUCTIONS
+
+  DATA:
+  FILE = "uni-19-ELSA_W5.dat";
+
+  VARIABLE:
+  NAMES = mplusid UDAT UDAY UMON UYER UIWR UDWR UANI ULET UHL1 UHL2 UHL3 UHL4 UPM3;
+   MISSING=.;
+   CATEGORICAL ARE all; idvariable = mplusid;
+  ANALYSIS:
+  estimator = wlsmv; coverage=0;
+  MODEL:
+  g by UDAT * ;
+   g by UDAY * ;
+   g by UMON * ;
+   g by UYER * ;
+   g by UIWR * ;
+   g by UDWR * ;
+   g by UANI * ;
+   g by ULET * ;
+   g by UPM3 * ;
+   g by UHL1 * ;
+   g by UHL2 * ;
+   g by UHL3 * ;
+   g by UHL4 * ;
+   g @ 1;
+
+  OUTPUT:
+  standardized; svalues;
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  574
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        9700
+
+Number of dependent variables                                   13
+Number of independent variables                                  0
+Number of continuous latent variables                            1
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   UDAT        UDAY        UMON        UYER        UIWR        UDWR
+   UANI        ULET        UHL1        UHL2        UHL3        UHL4
+   UPM3
+
+Continuous latent variables
+   G
+
+Variables with special functions
+
+  ID variable           MPLUSID
+
+Estimator                                                    WLSMV
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Parameterization                                             DELTA
+Link                                                        PROBIT
+
+Input data file(s)
+  uni-19-ELSA_W5.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns            29
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.000
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              UDAT          UDAY          UMON          UYER          UIWR
+              ________      ________      ________      ________      ________
+ UDAT           0.997
+ UDAY           0.997         0.997
+ UMON           0.997         0.997         0.997
+ UYER           0.997         0.997         0.997         0.997
+ UIWR           0.996         0.996         0.996         0.996         0.999
+ UDWR           0.996         0.996         0.996         0.996         0.999
+ UANI           0.995         0.995         0.995         0.995         0.996
+ ULET           0.934         0.934         0.934         0.934         0.934
+ UHL1           0.957         0.957         0.957         0.957         0.958
+ UHL2           0.957         0.957         0.957         0.957         0.958
+ UHL3           0.957         0.957         0.957         0.957         0.958
+ UHL4           0.957         0.957         0.957         0.957         0.957
+ UPM3           0.899         0.899         0.899         0.899         0.899
+
+
+           Covariance Coverage
+              UDWR          UANI          ULET          UHL1          UHL2
+              ________      ________      ________      ________      ________
+ UDWR           0.999
+ UANI           0.996         0.996
+ ULET           0.934         0.934         0.934
+ UHL1           0.958         0.957         0.919         0.958
+ UHL2           0.958         0.957         0.920         0.957         0.958
+ UHL3           0.958         0.957         0.919         0.957         0.957
+ UHL4           0.957         0.957         0.919         0.957         0.957
+ UPM3           0.899         0.899         0.864         0.885         0.885
+
+
+           Covariance Coverage
+              UHL3          UHL4          UPM3
+              ________      ________      ________
+ UHL3           0.958
+ UHL4           0.957         0.957
+ UPM3           0.885         0.885         0.899
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    UDAT
+      Category 1    0.167         1616.000
+      Category 2    0.833         8056.000
+    UDAY
+      Category 1    0.021          199.000
+      Category 2    0.979         9473.000
+    UMON
+      Category 1    0.021          203.000
+      Category 2    0.979         9468.000
+    UYER
+      Category 1    0.022          216.000
+      Category 2    0.978         9456.000
+    UIWR
+      Category 1    0.015          145.000
+      Category 2    0.018          173.000
+      Category 3    0.014          135.000
+      Category 4    0.040          388.000
+      Category 5    0.102          993.000
+      Category 6    0.434         4206.000
+      Category 7    0.212         2051.000
+      Category 8    0.114         1101.000
+      Category 9    0.042          409.000
+      Category 10    0.009           89.000
+    UDWR
+      Category 1    0.069          672.000
+      Category 2    0.031          300.000
+      Category 3    0.055          530.000
+      Category 4    0.113         1091.000
+      Category 5    0.186         1805.000
+      Category 6    0.367         3560.000
+      Category 7    0.104         1003.000
+      Category 8    0.050          487.000
+      Category 9    0.018          176.000
+      Category 10    0.007           65.000
+    UANI
+      Category 1    0.015          149.000
+      Category 2    0.004           42.000
+      Category 3    0.021          206.000
+      Category 4    0.080          772.000
+      Category 5    0.192         1858.000
+      Category 6    0.238         2300.000
+      Category 7    0.216         2083.000
+      Category 8    0.138         1329.000
+      Category 9    0.059          566.000
+      Category 10    0.037          357.000
+    ULET
+      Category 1    0.009           83.000
+      Category 2    0.033          301.000
+      Category 3    0.095          862.000
+      Category 4    0.257         2331.000
+      Category 5    0.241         2187.000
+      Category 6    0.261         2367.000
+      Category 7    0.049          441.000
+      Category 8    0.029          267.000
+      Category 9    0.010           95.000
+      Category 10    0.014          124.000
+    UHL1
+      Category 1    0.027          255.000
+      Category 2    0.973         9033.000
+    UHL2
+      Category 1    0.158         1468.000
+      Category 2    0.842         7822.000
+    UHL3
+      Category 1    0.081          748.000
+      Category 2    0.919         8540.000
+    UHL4
+      Category 1    0.129         1198.000
+      Category 2    0.871         8087.000
+    UPM3
+      Category 1    0.025          221.000
+      Category 2    0.243         2122.000
+      Category 3    0.011           99.000
+      Category 4    0.027          235.000
+      Category 5    0.693         6042.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       61
+
+Chi-Square Test of Model Fit
+
+          Value                           2827.846*
+          Degrees of Freedom                    65
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.066
+          90 Percent C.I.                    0.064  0.068
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.951
+          TLI                                0.941
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          55925.859
+          Degrees of Freedom                    78
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.087
+
+Optimum Function Value for Weighted Least-Squares Estimator
+
+          Value                     0.11753369D+00
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.409      0.014     28.617      0.000
+    UDAY               0.646      0.024     27.299      0.000
+    UMON               0.686      0.021     33.423      0.000
+    UYER               0.798      0.017     46.482      0.000
+    UIWR               0.856      0.004    190.734      0.000
+    UDWR               0.866      0.004    203.350      0.000
+    UANI               0.580      0.007     84.090      0.000
+    ULET               0.441      0.009     48.649      0.000
+    UPM3               0.284      0.013     21.119      0.000
+    UHL1               0.647      0.022     29.501      0.000
+    UHL2               0.527      0.014     38.672      0.000
+    UHL3               0.583      0.016     37.565      0.000
+    UHL4               0.567      0.014     40.346      0.000
+
+ Thresholds
+    UDAT$1            -0.966      0.015    -63.715      0.000
+    UDAY$1            -2.042      0.029    -70.162      0.000
+    UMON$1            -2.034      0.029    -70.375      0.000
+    UYER$1            -2.008      0.028    -71.031      0.000
+    UIWR$1            -2.171      0.033    -66.525      0.000
+    UIWR$2            -1.841      0.025    -74.541      0.000
+    UIWR$3            -1.677      0.022    -76.440      0.000
+    UIWR$4            -1.361      0.018    -75.204      0.000
+    UIWR$5            -0.881      0.015    -59.908      0.000
+    UIWR$6             0.314      0.013     24.240      0.000
+    UIWR$7             0.974      0.015     64.125      0.000
+    UIWR$8             1.631      0.021     76.677      0.000
+    UIWR$9             2.358      0.039     60.206      0.000
+    UDWR$1            -1.481      0.019    -76.476      0.000
+    UDWR$2            -1.280      0.017    -73.757      0.000
+    UDWR$3            -1.015      0.015    -65.794      0.000
+    UDWR$4            -0.620      0.014    -45.378      0.000
+    UDWR$5            -0.116      0.013     -9.070      0.000
+    UDWR$6             0.920      0.015     61.774      0.000
+    UDWR$7             1.439      0.019     76.144      0.000
+    UDWR$8             1.962      0.027     72.172      0.000
+    UDWR$9             2.472      0.044     55.957      0.000
+    UANI$1            -2.159      0.032    -66.797      0.000
+    UANI$2            -2.059      0.030    -69.688      0.000
+    UANI$3            -1.738      0.023    -75.809      0.000
+    UANI$4            -1.170      0.016    -70.957      0.000
+    UANI$5            -0.487      0.013    -36.543      0.000
+    UANI$6             0.129      0.013     10.089      0.000
+    UANI$7             0.729      0.014     51.829      0.000
+    UANI$8             1.307      0.018     74.200      0.000
+    UANI$9             1.787      0.024     75.228      0.000
+    ULET$1            -2.359      0.041    -58.179      0.000
+    ULET$2            -1.724      0.023    -73.542      0.000
+    ULET$3            -1.091      0.016    -66.321      0.000
+    ULET$4            -0.267      0.013    -19.983      0.000
+    ULET$5             0.349      0.013     25.899      0.000
+    ULET$6             1.268      0.018     71.083      0.000
+    ULET$7             1.610      0.022     74.196      0.000
+    ULET$8             1.974      0.028     69.515      0.000
+    ULET$9             2.206      0.035     63.248      0.000
+    UHL1$1            -1.920      0.027    -71.559      0.000
+    UHL2$1            -1.003      0.016    -63.938      0.000
+    UHL3$1            -1.401      0.019    -74.163      0.000
+    UHL4$1            -1.131      0.017    -68.416      0.000
+    UPM3$1            -1.954      0.028    -68.635      0.000
+    UPM3$2            -0.617      0.014    -42.848      0.000
+    UPM3$3            -0.583      0.014    -40.788      0.000
+    UPM3$4            -0.504      0.014    -35.863      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.409      0.014     28.617      0.000
+    UDAY               0.646      0.024     27.299      0.000
+    UMON               0.686      0.021     33.423      0.000
+    UYER               0.798      0.017     46.482      0.000
+    UIWR               0.856      0.004    190.734      0.000
+    UDWR               0.866      0.004    203.350      0.000
+    UANI               0.580      0.007     84.090      0.000
+    ULET               0.441      0.009     48.649      0.000
+    UPM3               0.284      0.013     21.119      0.000
+    UHL1               0.647      0.022     29.501      0.000
+    UHL2               0.527      0.014     38.672      0.000
+    UHL3               0.583      0.016     37.565      0.000
+    UHL4               0.567      0.014     40.346      0.000
+
+ Thresholds
+    UDAT$1            -0.966      0.015    -63.715      0.000
+    UDAY$1            -2.042      0.029    -70.162      0.000
+    UMON$1            -2.034      0.029    -70.375      0.000
+    UYER$1            -2.008      0.028    -71.031      0.000
+    UIWR$1            -2.171      0.033    -66.525      0.000
+    UIWR$2            -1.841      0.025    -74.541      0.000
+    UIWR$3            -1.677      0.022    -76.440      0.000
+    UIWR$4            -1.361      0.018    -75.204      0.000
+    UIWR$5            -0.881      0.015    -59.908      0.000
+    UIWR$6             0.314      0.013     24.240      0.000
+    UIWR$7             0.974      0.015     64.125      0.000
+    UIWR$8             1.631      0.021     76.677      0.000
+    UIWR$9             2.358      0.039     60.206      0.000
+    UDWR$1            -1.481      0.019    -76.476      0.000
+    UDWR$2            -1.280      0.017    -73.757      0.000
+    UDWR$3            -1.015      0.015    -65.794      0.000
+    UDWR$4            -0.620      0.014    -45.378      0.000
+    UDWR$5            -0.116      0.013     -9.070      0.000
+    UDWR$6             0.920      0.015     61.774      0.000
+    UDWR$7             1.439      0.019     76.144      0.000
+    UDWR$8             1.962      0.027     72.172      0.000
+    UDWR$9             2.472      0.044     55.957      0.000
+    UANI$1            -2.159      0.032    -66.797      0.000
+    UANI$2            -2.059      0.030    -69.688      0.000
+    UANI$3            -1.738      0.023    -75.809      0.000
+    UANI$4            -1.170      0.016    -70.957      0.000
+    UANI$5            -0.487      0.013    -36.543      0.000
+    UANI$6             0.129      0.013     10.089      0.000
+    UANI$7             0.729      0.014     51.829      0.000
+    UANI$8             1.307      0.018     74.200      0.000
+    UANI$9             1.787      0.024     75.228      0.000
+    ULET$1            -2.359      0.041    -58.179      0.000
+    ULET$2            -1.724      0.023    -73.542      0.000
+    ULET$3            -1.091      0.016    -66.321      0.000
+    ULET$4            -0.267      0.013    -19.983      0.000
+    ULET$5             0.349      0.013     25.899      0.000
+    ULET$6             1.268      0.018     71.083      0.000
+    ULET$7             1.610      0.022     74.196      0.000
+    ULET$8             1.974      0.028     69.515      0.000
+    ULET$9             2.206      0.035     63.248      0.000
+    UHL1$1            -1.920      0.027    -71.559      0.000
+    UHL2$1            -1.003      0.016    -63.938      0.000
+    UHL3$1            -1.401      0.019    -74.163      0.000
+    UHL4$1            -1.131      0.017    -68.416      0.000
+    UPM3$1            -1.954      0.028    -68.635      0.000
+    UPM3$2            -0.617      0.014    -42.848      0.000
+    UPM3$3            -0.583      0.014    -40.788      0.000
+    UPM3$4            -0.504      0.014    -35.863      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.409      0.014     28.617      0.000
+    UDAY               0.646      0.024     27.299      0.000
+    UMON               0.686      0.021     33.423      0.000
+    UYER               0.798      0.017     46.482      0.000
+    UIWR               0.856      0.004    190.734      0.000
+    UDWR               0.866      0.004    203.350      0.000
+    UANI               0.580      0.007     84.090      0.000
+    ULET               0.441      0.009     48.649      0.000
+    UPM3               0.284      0.013     21.119      0.000
+    UHL1               0.647      0.022     29.501      0.000
+    UHL2               0.527      0.014     38.672      0.000
+    UHL3               0.583      0.016     37.565      0.000
+    UHL4               0.567      0.014     40.346      0.000
+
+ Thresholds
+    UDAT$1            -0.966      0.015    -63.715      0.000
+    UDAY$1            -2.042      0.029    -70.162      0.000
+    UMON$1            -2.034      0.029    -70.375      0.000
+    UYER$1            -2.008      0.028    -71.031      0.000
+    UIWR$1            -2.171      0.033    -66.525      0.000
+    UIWR$2            -1.841      0.025    -74.541      0.000
+    UIWR$3            -1.677      0.022    -76.440      0.000
+    UIWR$4            -1.361      0.018    -75.204      0.000
+    UIWR$5            -0.881      0.015    -59.908      0.000
+    UIWR$6             0.314      0.013     24.240      0.000
+    UIWR$7             0.974      0.015     64.125      0.000
+    UIWR$8             1.631      0.021     76.677      0.000
+    UIWR$9             2.358      0.039     60.206      0.000
+    UDWR$1            -1.481      0.019    -76.476      0.000
+    UDWR$2            -1.280      0.017    -73.757      0.000
+    UDWR$3            -1.015      0.015    -65.794      0.000
+    UDWR$4            -0.620      0.014    -45.378      0.000
+    UDWR$5            -0.116      0.013     -9.070      0.000
+    UDWR$6             0.920      0.015     61.774      0.000
+    UDWR$7             1.439      0.019     76.144      0.000
+    UDWR$8             1.962      0.027     72.172      0.000
+    UDWR$9             2.472      0.044     55.957      0.000
+    UANI$1            -2.159      0.032    -66.797      0.000
+    UANI$2            -2.059      0.030    -69.688      0.000
+    UANI$3            -1.738      0.023    -75.809      0.000
+    UANI$4            -1.170      0.016    -70.957      0.000
+    UANI$5            -0.487      0.013    -36.543      0.000
+    UANI$6             0.129      0.013     10.089      0.000
+    UANI$7             0.729      0.014     51.829      0.000
+    UANI$8             1.307      0.018     74.200      0.000
+    UANI$9             1.787      0.024     75.228      0.000
+    ULET$1            -2.359      0.041    -58.179      0.000
+    ULET$2            -1.724      0.023    -73.542      0.000
+    ULET$3            -1.091      0.016    -66.321      0.000
+    ULET$4            -0.267      0.013    -19.983      0.000
+    ULET$5             0.349      0.013     25.899      0.000
+    ULET$6             1.268      0.018     71.083      0.000
+    ULET$7             1.610      0.022     74.196      0.000
+    ULET$8             1.974      0.028     69.515      0.000
+    ULET$9             2.206      0.035     63.248      0.000
+    UHL1$1            -1.920      0.027    -71.559      0.000
+    UHL2$1            -1.003      0.016    -63.938      0.000
+    UHL3$1            -1.401      0.019    -74.163      0.000
+    UHL4$1            -1.131      0.017    -68.416      0.000
+    UPM3$1            -1.954      0.028    -68.635      0.000
+    UPM3$2            -0.617      0.014    -42.848      0.000
+    UPM3$3            -0.583      0.014    -40.788      0.000
+    UPM3$4            -0.504      0.014    -35.863      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.409      0.014     28.617      0.000
+    UDAY               0.646      0.024     27.299      0.000
+    UMON               0.686      0.021     33.423      0.000
+    UYER               0.798      0.017     46.482      0.000
+    UIWR               0.856      0.004    190.734      0.000
+    UDWR               0.866      0.004    203.350      0.000
+    UANI               0.580      0.007     84.090      0.000
+    ULET               0.441      0.009     48.649      0.000
+    UPM3               0.284      0.013     21.119      0.000
+    UHL1               0.647      0.022     29.501      0.000
+    UHL2               0.527      0.014     38.672      0.000
+    UHL3               0.583      0.016     37.565      0.000
+    UHL4               0.567      0.014     40.346      0.000
+
+ Thresholds
+    UDAT$1            -0.966      0.015    -63.715      0.000
+    UDAY$1            -2.042      0.029    -70.162      0.000
+    UMON$1            -2.034      0.029    -70.375      0.000
+    UYER$1            -2.008      0.028    -71.031      0.000
+    UIWR$1            -2.171      0.033    -66.525      0.000
+    UIWR$2            -1.841      0.025    -74.541      0.000
+    UIWR$3            -1.677      0.022    -76.440      0.000
+    UIWR$4            -1.361      0.018    -75.204      0.000
+    UIWR$5            -0.881      0.015    -59.908      0.000
+    UIWR$6             0.314      0.013     24.240      0.000
+    UIWR$7             0.974      0.015     64.125      0.000
+    UIWR$8             1.631      0.021     76.677      0.000
+    UIWR$9             2.358      0.039     60.206      0.000
+    UDWR$1            -1.481      0.019    -76.476      0.000
+    UDWR$2            -1.280      0.017    -73.757      0.000
+    UDWR$3            -1.015      0.015    -65.794      0.000
+    UDWR$4            -0.620      0.014    -45.378      0.000
+    UDWR$5            -0.116      0.013     -9.070      0.000
+    UDWR$6             0.920      0.015     61.774      0.000
+    UDWR$7             1.439      0.019     76.144      0.000
+    UDWR$8             1.962      0.027     72.172      0.000
+    UDWR$9             2.472      0.044     55.957      0.000
+    UANI$1            -2.159      0.032    -66.797      0.000
+    UANI$2            -2.059      0.030    -69.688      0.000
+    UANI$3            -1.738      0.023    -75.809      0.000
+    UANI$4            -1.170      0.016    -70.957      0.000
+    UANI$5            -0.487      0.013    -36.543      0.000
+    UANI$6             0.129      0.013     10.089      0.000
+    UANI$7             0.729      0.014     51.829      0.000
+    UANI$8             1.307      0.018     74.200      0.000
+    UANI$9             1.787      0.024     75.228      0.000
+    ULET$1            -2.359      0.041    -58.179      0.000
+    ULET$2            -1.724      0.023    -73.542      0.000
+    ULET$3            -1.091      0.016    -66.321      0.000
+    ULET$4            -0.267      0.013    -19.983      0.000
+    ULET$5             0.349      0.013     25.899      0.000
+    ULET$6             1.268      0.018     71.083      0.000
+    ULET$7             1.610      0.022     74.196      0.000
+    ULET$8             1.974      0.028     69.515      0.000
+    ULET$9             2.206      0.035     63.248      0.000
+    UHL1$1            -1.920      0.027    -71.559      0.000
+    UHL2$1            -1.003      0.016    -63.938      0.000
+    UHL3$1            -1.401      0.019    -74.163      0.000
+    UHL4$1            -1.131      0.017    -68.416      0.000
+    UPM3$1            -1.954      0.028    -68.635      0.000
+    UPM3$2            -0.617      0.014    -42.848      0.000
+    UPM3$3            -0.583      0.014    -40.788      0.000
+    UPM3$4            -0.504      0.014    -35.863      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed   Residual
+    Variable        Estimate       S.E.  Est./S.E.    P-Value    Variance
+
+    UDAT               0.167      0.012     14.309      0.000      0.833
+    UDAY               0.417      0.031     13.649      0.000      0.583
+    UMON               0.471      0.028     16.712      0.000      0.529
+    UYER               0.637      0.027     23.241      0.000      0.363
+    UIWR               0.734      0.008     95.367      0.000      0.266
+    UDWR               0.750      0.007    101.675      0.000      0.250
+    UANI               0.337      0.008     42.045      0.000      0.663
+    ULET               0.194      0.008     24.325      0.000      0.806
+    UHL1               0.418      0.028     14.751      0.000      0.582
+    UHL2               0.278      0.014     19.336      0.000      0.722
+    UHL3               0.340      0.018     18.783      0.000      0.660
+    UHL4               0.321      0.016     20.173      0.000      0.679
+    UPM3               0.081      0.008     10.559      0.000      0.919
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.572E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     g BY udat*0.40896;
+     g BY uday*0.64572;
+     g BY umon*0.68621;
+     g BY uyer*0.79802;
+     g BY uiwr*0.85649;
+     g BY udwr*0.86628;
+     g BY uani*0.58048;
+     g BY ulet*0.44072;
+     g BY upm3*0.28379;
+     g BY uhl1*0.64654;
+     g BY uhl2*0.52681;
+     g BY uhl3*0.58273;
+     g BY uhl4*0.56671;
+
+     [ udat$1*-0.96577 ];
+     [ uday$1*-2.04202 ];
+     [ umon$1*-2.03371 ];
+     [ uyer$1*-2.00780 ];
+     [ uiwr$1*-2.17105 ];
+     [ uiwr$2*-1.84091 ];
+     [ uiwr$3*-1.67723 ];
+     [ uiwr$4*-1.36079 ];
+     [ uiwr$5*-0.88060 ];
+     [ uiwr$6*0.31422 ];
+     [ uiwr$7*0.97405 ];
+     [ uiwr$8*1.63149 ];
+     [ uiwr$9*2.35809 ];
+     [ udwr$1*-1.48060 ];
+     [ udwr$2*-1.27973 ];
+     [ udwr$3*-1.01513 ];
+     [ udwr$4*-0.62002 ];
+     [ udwr$5*-0.11577 ];
+     [ udwr$6*0.92050 ];
+     [ udwr$7*1.43857 ];
+     [ udwr$8*1.96213 ];
+     [ udwr$9*2.47250 ];
+     [ uani$1*-2.15910 ];
+     [ uani$2*-2.05856 ];
+     [ uani$3*-1.73819 ];
+     [ uani$4*-1.17005 ];
+     [ uani$5*-0.48655 ];
+     [ uani$6*0.12904 ];
+     [ uani$7*0.72875 ];
+     [ uani$8*1.30746 ];
+     [ uani$9*1.78725 ];
+     [ ulet$1*-2.35896 ];
+     [ ulet$2*-1.72356 ];
+     [ ulet$3*-1.09136 ];
+     [ ulet$4*-0.26657 ];
+     [ ulet$5*0.34870 ];
+     [ ulet$6*1.26833 ];
+     [ ulet$7*1.61041 ];
+     [ ulet$8*1.97423 ];
+     [ ulet$9*2.20607 ];
+     [ uhl1$1*-1.91959 ];
+     [ uhl2$1*-1.00263 ];
+     [ uhl3$1*-1.40149 ];
+     [ uhl4$1*-1.13101 ];
+     [ upm3$1*-1.95406 ];
+     [ upm3$2*-0.61668 ];
+     [ upm3$3*-0.58261 ];
+     [ upm3$4*-0.50428 ];
+
+     g@1;
+
+
+
+     Beginning Time:  22:56:21
+        Ending Time:  22:56:22
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2018 Muthen & Muthen

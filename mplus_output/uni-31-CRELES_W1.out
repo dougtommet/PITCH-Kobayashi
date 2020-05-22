@@ -1,0 +1,390 @@
+Mplus VERSION 8.1 (Mac)
+MUTHEN & MUTHEN
+04/23/2020  10:56 PM
+
+INPUT INSTRUCTIONS
+
+  DATA:
+  FILE = "uni-31-CRELES_W1.dat";
+
+  VARIABLE:
+  NAMES = mplusid UDAT UDAY UMON UYER UDRG UDSB UDIR UFC2;
+   MISSING=.;
+   CATEGORICAL ARE all; idvariable = mplusid;
+  ANALYSIS:
+  estimator = wlsmv; coverage=0;
+  MODEL:
+  g by UDAT * ;
+   g by UDAY * ;
+   g by UMON * ;
+   g by UYER * ;
+   g by UDRG * ;
+   g by UDSB * ;
+   g by UDIR * ;
+   g by UFC2 * ;
+   g @ 1;
+
+  OUTPUT:
+  standardized; svalues;
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  338
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        2026
+
+Number of dependent variables                                    8
+Number of independent variables                                  0
+Number of continuous latent variables                            1
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   UDAT        UDAY        UMON        UYER        UDRG        UDSB
+   UDIR        UFC2
+
+Continuous latent variables
+   G
+
+Variables with special functions
+
+  ID variable           MPLUSID
+
+Estimator                                                    WLSMV
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Parameterization                                             DELTA
+Link                                                        PROBIT
+
+Input data file(s)
+  uni-31-CRELES_W1.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.000
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              UDAT          UDAY          UMON          UYER          UDRG
+              ________      ________      ________      ________      ________
+ UDAT           1.000
+ UDAY           1.000         1.000
+ UMON           1.000         1.000         1.000
+ UYER           1.000         1.000         1.000         1.000
+ UDRG           1.000         1.000         1.000         1.000         1.000
+ UDSB           1.000         1.000         1.000         1.000         1.000
+ UDIR           1.000         1.000         1.000         1.000         1.000
+ UFC2           1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              UDSB          UDIR          UFC2
+              ________      ________      ________
+ UDSB           1.000
+ UDIR           1.000         1.000
+ UFC2           1.000         1.000         1.000
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    UDAT
+      Category 1    0.366          742.000
+      Category 2    0.634         1284.000
+    UDAY
+      Category 1    0.107          216.000
+      Category 2    0.893         1810.000
+    UMON
+      Category 1    0.115          233.000
+      Category 2    0.885         1793.000
+    UYER
+      Category 1    0.315          638.000
+      Category 2    0.685         1388.000
+    UDRG
+      Category 1    0.236          479.000
+      Category 2    0.161          327.000
+      Category 3    0.285          578.000
+      Category 4    0.317          642.000
+    UDSB
+      Category 1    0.688         1393.000
+      Category 2    0.312          633.000
+    UDIR
+      Category 1    0.018           37.000
+      Category 2    0.079          161.000
+      Category 3    0.272          552.000
+      Category 4    0.630         1276.000
+    UFC2
+      Category 1    0.198          401.000
+      Category 2    0.802         1625.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       20
+
+Chi-Square Test of Model Fit
+
+          Value                             72.834*
+          Degrees of Freedom                    20
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.036
+          90 Percent C.I.                    0.027  0.045
+          Probability RMSEA <= .05           0.995
+
+CFI/TLI
+
+          CFI                                0.981
+          TLI                                0.974
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           2862.896
+          Degrees of Freedom                    28
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.040
+
+Optimum Function Value for Weighted Least-Squares Estimator
+
+          Value                     0.12542975D-01
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.611      0.026     23.355      0.000
+    UDAY               0.665      0.035     19.107      0.000
+    UMON               0.708      0.033     21.523      0.000
+    UYER               0.801      0.021     37.853      0.000
+    UDRG               0.518      0.024     21.796      0.000
+    UDSB               0.601      0.028     21.700      0.000
+    UDIR               0.458      0.028     16.511      0.000
+    UFC2               0.613      0.030     20.230      0.000
+
+ Thresholds
+    UDAT$1            -0.342      0.028    -12.018      0.000
+    UDAY$1            -1.245      0.037    -33.376      0.000
+    UMON$1            -1.200      0.037    -32.873      0.000
+    UYER$1            -0.482      0.029    -16.590      0.000
+    UDRG$1            -0.718      0.031    -23.447      0.000
+    UDRG$2            -0.259      0.028     -9.188      0.000
+    UDRG$3             0.476      0.029     16.415      0.000
+    UDSB$1             0.489      0.029     16.809      0.000
+    UDIR$1            -2.091      0.066    -31.503      0.000
+    UDIR$2            -1.295      0.038    -33.865      0.000
+    UDIR$3            -0.331      0.028    -11.665      0.000
+    UFC2$1            -0.849      0.032    -26.685      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.611      0.026     23.355      0.000
+    UDAY               0.665      0.035     19.107      0.000
+    UMON               0.708      0.033     21.523      0.000
+    UYER               0.801      0.021     37.853      0.000
+    UDRG               0.518      0.024     21.796      0.000
+    UDSB               0.601      0.028     21.700      0.000
+    UDIR               0.458      0.028     16.511      0.000
+    UFC2               0.613      0.030     20.230      0.000
+
+ Thresholds
+    UDAT$1            -0.342      0.028    -12.018      0.000
+    UDAY$1            -1.245      0.037    -33.376      0.000
+    UMON$1            -1.200      0.037    -32.873      0.000
+    UYER$1            -0.482      0.029    -16.590      0.000
+    UDRG$1            -0.718      0.031    -23.447      0.000
+    UDRG$2            -0.259      0.028     -9.188      0.000
+    UDRG$3             0.476      0.029     16.415      0.000
+    UDSB$1             0.489      0.029     16.809      0.000
+    UDIR$1            -2.091      0.066    -31.503      0.000
+    UDIR$2            -1.295      0.038    -33.865      0.000
+    UDIR$3            -0.331      0.028    -11.665      0.000
+    UFC2$1            -0.849      0.032    -26.685      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.611      0.026     23.355      0.000
+    UDAY               0.665      0.035     19.107      0.000
+    UMON               0.708      0.033     21.523      0.000
+    UYER               0.801      0.021     37.853      0.000
+    UDRG               0.518      0.024     21.796      0.000
+    UDSB               0.601      0.028     21.700      0.000
+    UDIR               0.458      0.028     16.511      0.000
+    UFC2               0.613      0.030     20.230      0.000
+
+ Thresholds
+    UDAT$1            -0.342      0.028    -12.018      0.000
+    UDAY$1            -1.245      0.037    -33.376      0.000
+    UMON$1            -1.200      0.037    -32.873      0.000
+    UYER$1            -0.482      0.029    -16.590      0.000
+    UDRG$1            -0.718      0.031    -23.447      0.000
+    UDRG$2            -0.259      0.028     -9.188      0.000
+    UDRG$3             0.476      0.029     16.415      0.000
+    UDSB$1             0.489      0.029     16.809      0.000
+    UDIR$1            -2.091      0.066    -31.503      0.000
+    UDIR$2            -1.295      0.038    -33.865      0.000
+    UDIR$3            -0.331      0.028    -11.665      0.000
+    UFC2$1            -0.849      0.032    -26.685      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAT               0.611      0.026     23.355      0.000
+    UDAY               0.665      0.035     19.107      0.000
+    UMON               0.708      0.033     21.523      0.000
+    UYER               0.801      0.021     37.853      0.000
+    UDRG               0.518      0.024     21.796      0.000
+    UDSB               0.601      0.028     21.700      0.000
+    UDIR               0.458      0.028     16.511      0.000
+    UFC2               0.613      0.030     20.230      0.000
+
+ Thresholds
+    UDAT$1            -0.342      0.028    -12.018      0.000
+    UDAY$1            -1.245      0.037    -33.376      0.000
+    UMON$1            -1.200      0.037    -32.873      0.000
+    UYER$1            -0.482      0.029    -16.590      0.000
+    UDRG$1            -0.718      0.031    -23.447      0.000
+    UDRG$2            -0.259      0.028     -9.188      0.000
+    UDRG$3             0.476      0.029     16.415      0.000
+    UDSB$1             0.489      0.029     16.809      0.000
+    UDIR$1            -2.091      0.066    -31.503      0.000
+    UDIR$2            -1.295      0.038    -33.865      0.000
+    UDIR$3            -0.331      0.028    -11.665      0.000
+    UFC2$1            -0.849      0.032    -26.685      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed   Residual
+    Variable        Estimate       S.E.  Est./S.E.    P-Value    Variance
+
+    UDAT               0.373      0.032     11.678      0.000      0.627
+    UDAY               0.442      0.046      9.553      0.000      0.558
+    UMON               0.502      0.047     10.761      0.000      0.498
+    UYER               0.642      0.034     18.927      0.000      0.358
+    UDRG               0.269      0.025     10.898      0.000      0.731
+    UDSB               0.361      0.033     10.850      0.000      0.639
+    UDIR               0.210      0.025      8.256      0.000      0.790
+    UFC2               0.376      0.037     10.115      0.000      0.624
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.527E-01
+       (ratio of smallest to largest eigenvalue)
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     g BY udat*0.61061;
+     g BY uday*0.66506;
+     g BY umon*0.70840;
+     g BY uyer*0.80136;
+     g BY udrg*0.51820;
+     g BY udsb*0.60094;
+     g BY udir*0.45801;
+     g BY ufc2*0.61326;
+
+     [ udat$1*-0.34183 ];
+     [ uday$1*-1.24474 ];
+     [ umon$1*-1.20033 ];
+     [ uyer$1*-0.48199 ];
+     [ udrg$1*-0.71784 ];
+     [ udrg$2*-0.25897 ];
+     [ udrg$3*0.47644 ];
+     [ udsb$1*0.48895 ];
+     [ udir$1*-2.09103 ];
+     [ udir$2*-1.29460 ];
+     [ udir$3*-0.33136 ];
+     [ ufc2$1*-0.84905 ];
+
+     g@1;
+
+
+
+     Beginning Time:  22:56:38
+        Ending Time:  22:56:38
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2018 Muthen & Muthen

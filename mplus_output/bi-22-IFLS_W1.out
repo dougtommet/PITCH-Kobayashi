@@ -1,0 +1,426 @@
+Mplus VERSION 8.1 (Mac)
+MUTHEN & MUTHEN
+04/23/2020  10:57 PM
+
+INPUT INSTRUCTIONS
+
+  DATA:
+  FILE = "bi-22-IFLS_W1.dat";
+
+  VARIABLE:
+  NAMES = mplusid UDAY UDTS UIWR UDWR;
+   MISSING=.;
+   CATEGORICAL ARE all; idvariable = mplusid;
+  ANALYSIS:
+  estimator = wlsmv; coverage=0;
+  MODEL:
+  g by UDAY * ;
+   g by UIWR * ;
+   g by UDWR * ;
+   g by UDTS * ;
+   s1 by UIWR @ 1 ;
+   s1 by UDWR @ 1 ;
+   g @ 1;
+   s1 * ;
+   g with s1 @ 0 ;
+
+  OUTPUT:
+  standardized; svalues;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                       21603
+
+Number of dependent variables                                    4
+Number of independent variables                                  0
+Number of continuous latent variables                            2
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   UDAY        UDTS        UIWR        UDWR
+
+Continuous latent variables
+   G           S1
+
+Variables with special functions
+
+  ID variable           MPLUSID
+
+Estimator                                                    WLSMV
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Parameterization                                             DELTA
+Link                                                        PROBIT
+
+Input data file(s)
+  bi-22-IFLS_W1.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             9
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.000
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              UDAY          UDTS          UIWR          UDWR
+              ________      ________      ________      ________
+ UDAY           0.984
+ UDTS           0.984         1.000
+ UIWR           0.961         0.973         0.973
+ UDWR           0.958         0.969         0.969         0.969
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    UDAY
+      Category 1    0.042          892.000
+      Category 2    0.958        20370.000
+    UDTS
+      Category 1    0.075         1628.000
+      Category 2    0.925        19973.000
+    UIWR
+      Category 1    0.030          631.000
+      Category 2    0.029          611.000
+      Category 3    0.066         1389.000
+      Category 4    0.118         2474.000
+      Category 5    0.177         3710.000
+      Category 6    0.389         8185.000
+      Category 7    0.123         2579.000
+      Category 8    0.050         1052.000
+      Category 9    0.015          321.000
+      Category 10    0.003           64.000
+    UDWR
+      Category 1    0.092         1925.000
+      Category 2    0.065         1356.000
+      Category 3    0.110         2307.000
+      Category 4    0.158         3305.000
+      Category 5    0.187         3920.000
+      Category 6    0.290         6074.000
+      Category 7    0.062         1300.000
+      Category 8    0.025          526.000
+      Category 9    0.008          161.000
+      Category 10    0.003           56.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       25
+
+Chi-Square Test of Model Fit
+
+          Value                              1.543*
+          Degrees of Freedom                     1
+          P-Value                           0.2142
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.005
+          90 Percent C.I.                    0.000  0.020
+          Probability RMSEA <= .05           1.000
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.000
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          81898.557
+          Degrees of Freedom                     6
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.002
+
+Optimum Function Value for Weighted Least-Squares Estimator
+
+          Value                     0.95725550D-05
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAY               0.344      0.019     18.339      0.000
+    UIWR               0.688      0.027     25.071      0.000
+    UDWR               0.642      0.026     24.385      0.000
+    UDTS               0.930      0.037     25.189      0.000
+
+ S1       BY
+    UIWR               1.000      0.000    999.000    999.000
+    UDWR               1.000      0.000    999.000    999.000
+
+ G        WITH
+    S1                 0.000      0.000    999.000    999.000
+
+ Thresholds
+    UDAY$1            -1.728      0.015   -112.604      0.000
+    UDTS$1            -1.437      0.013   -113.670      0.000
+    UIWR$1            -1.880      0.017   -108.764      0.000
+    UIWR$2            -1.562      0.014   -113.070      0.000
+    UIWR$3            -1.149      0.011   -103.761      0.000
+    UIWR$4            -0.697      0.009    -73.726      0.000
+    UIWR$5            -0.203      0.009    -23.342      0.000
+    UIWR$6             0.874      0.010     87.748      0.000
+    UIWR$7             1.488      0.013    112.699      0.000
+    UIWR$8             2.090      0.021    101.516      0.000
+    UIWR$9             2.743      0.041     66.923      0.000
+    UDWR$1            -1.329      0.012   -109.769      0.000
+    UDWR$2            -1.008      0.010    -96.278      0.000
+    UDWR$3            -0.622      0.009    -66.874      0.000
+    UDWR$4            -0.189      0.009    -21.720      0.000
+    UDWR$5             0.285      0.009     32.417      0.000
+    UDWR$6             1.295      0.012    108.866      0.000
+    UDWR$7             1.805      0.016    110.351      0.000
+    UDWR$8             2.313      0.025     90.856      0.000
+    UDWR$9             2.785      0.043     64.365      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+    S1                 0.353      0.035      9.991      0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAY               0.344      0.019     18.339      0.000
+    UIWR               0.688      0.027     25.071      0.000
+    UDWR               0.642      0.026     24.385      0.000
+    UDTS               0.930      0.037     25.189      0.000
+
+ S1       BY
+    UIWR               0.594      0.030     19.983      0.000
+    UDWR               0.594      0.030     19.983      0.000
+
+ G        WITH
+    S1                 0.000      0.000    999.000    999.000
+
+ Thresholds
+    UDAY$1            -1.728      0.015   -112.604      0.000
+    UDTS$1            -1.437      0.013   -113.670      0.000
+    UIWR$1            -1.880      0.017   -108.764      0.000
+    UIWR$2            -1.562      0.014   -113.070      0.000
+    UIWR$3            -1.149      0.011   -103.761      0.000
+    UIWR$4            -0.697      0.009    -73.726      0.000
+    UIWR$5            -0.203      0.009    -23.342      0.000
+    UIWR$6             0.874      0.010     87.748      0.000
+    UIWR$7             1.488      0.013    112.699      0.000
+    UIWR$8             2.090      0.021    101.516      0.000
+    UIWR$9             2.743      0.041     66.923      0.000
+    UDWR$1            -1.329      0.012   -109.769      0.000
+    UDWR$2            -1.008      0.010    -96.278      0.000
+    UDWR$3            -0.622      0.009    -66.874      0.000
+    UDWR$4            -0.189      0.009    -21.720      0.000
+    UDWR$5             0.285      0.009     32.417      0.000
+    UDWR$6             1.295      0.012    108.866      0.000
+    UDWR$7             1.805      0.016    110.351      0.000
+    UDWR$8             2.313      0.025     90.856      0.000
+    UDWR$9             2.785      0.043     64.365      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+    S1                 1.000      0.000    999.000    999.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAY               0.344      0.019     18.339      0.000
+    UIWR               0.688      0.027     25.071      0.000
+    UDWR               0.642      0.026     24.385      0.000
+    UDTS               0.930      0.037     25.189      0.000
+
+ S1       BY
+    UIWR               0.594      0.030     19.983      0.000
+    UDWR               0.594      0.030     19.983      0.000
+
+ G        WITH
+    S1                 0.000      0.000    999.000    999.000
+
+ Thresholds
+    UDAY$1            -1.728      0.015   -112.604      0.000
+    UDTS$1            -1.437      0.013   -113.670      0.000
+    UIWR$1            -1.880      0.017   -108.764      0.000
+    UIWR$2            -1.562      0.014   -113.070      0.000
+    UIWR$3            -1.149      0.011   -103.761      0.000
+    UIWR$4            -0.697      0.009    -73.726      0.000
+    UIWR$5            -0.203      0.009    -23.342      0.000
+    UIWR$6             0.874      0.010     87.748      0.000
+    UIWR$7             1.488      0.013    112.699      0.000
+    UIWR$8             2.090      0.021    101.516      0.000
+    UIWR$9             2.743      0.041     66.923      0.000
+    UDWR$1            -1.329      0.012   -109.769      0.000
+    UDWR$2            -1.008      0.010    -96.278      0.000
+    UDWR$3            -0.622      0.009    -66.874      0.000
+    UDWR$4            -0.189      0.009    -21.720      0.000
+    UDWR$5             0.285      0.009     32.417      0.000
+    UDWR$6             1.295      0.012    108.866      0.000
+    UDWR$7             1.805      0.016    110.351      0.000
+    UDWR$8             2.313      0.025     90.856      0.000
+    UDWR$9             2.785      0.043     64.365      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+    S1                 1.000      0.000    999.000    999.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    UDAY               0.344      0.019     18.339      0.000
+    UIWR               0.688      0.027     25.071      0.000
+    UDWR               0.642      0.026     24.385      0.000
+    UDTS               0.930      0.037     25.189      0.000
+
+ S1       BY
+    UIWR               0.594      0.030     19.983      0.000
+    UDWR               0.594      0.030     19.983      0.000
+
+ G        WITH
+    S1                 0.000      0.000    999.000    999.000
+
+ Thresholds
+    UDAY$1            -1.728      0.015   -112.604      0.000
+    UDTS$1            -1.437      0.013   -113.670      0.000
+    UIWR$1            -1.880      0.017   -108.764      0.000
+    UIWR$2            -1.562      0.014   -113.070      0.000
+    UIWR$3            -1.149      0.011   -103.761      0.000
+    UIWR$4            -0.697      0.009    -73.726      0.000
+    UIWR$5            -0.203      0.009    -23.342      0.000
+    UIWR$6             0.874      0.010     87.748      0.000
+    UIWR$7             1.488      0.013    112.699      0.000
+    UIWR$8             2.090      0.021    101.516      0.000
+    UIWR$9             2.743      0.041     66.923      0.000
+    UDWR$1            -1.329      0.012   -109.769      0.000
+    UDWR$2            -1.008      0.010    -96.278      0.000
+    UDWR$3            -0.622      0.009    -66.874      0.000
+    UDWR$4            -0.189      0.009    -21.720      0.000
+    UDWR$5             0.285      0.009     32.417      0.000
+    UDWR$6             1.295      0.012    108.866      0.000
+    UDWR$7             1.805      0.016    110.351      0.000
+    UDWR$8             2.313      0.025     90.856      0.000
+    UDWR$9             2.785      0.043     64.365      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+    S1                 1.000      0.000    999.000    999.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed   Residual
+    Variable        Estimate       S.E.  Est./S.E.    P-Value    Variance
+
+    UDAY               0.119      0.013      9.169      0.000      0.881
+    UDTS               0.864      0.069     12.594      0.000      0.136
+    UIWR               0.825      0.007    126.667      0.000      0.175
+    UDWR               0.765      0.006    125.971      0.000      0.235
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.791E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     g BY uday*0.34441;
+     g BY uiwr*0.68755;
+     g BY udwr*0.64234;
+     g BY udts*0.92963;
+     s1 BY uiwr@1;
+     s1 BY udwr@1;
+
+     g WITH s1@0;
+
+     [ uday$1*-1.72846 ];
+     [ udts$1*-1.43694 ];
+     [ uiwr$1*-1.88043 ];
+     [ uiwr$2*-1.56239 ];
+     [ uiwr$3*-1.14943 ];
+     [ uiwr$4*-0.69697 ];
+     [ uiwr$5*-0.20332 ];
+     [ uiwr$6*0.87388 ];
+     [ uiwr$7*1.48799 ];
+     [ uiwr$8*2.08977 ];
+     [ uiwr$9*2.74286 ];
+     [ udwr$1*-1.32870 ];
+     [ udwr$2*-1.00786 ];
+     [ udwr$3*-0.62196 ];
+     [ udwr$4*-0.18939 ];
+     [ udwr$5*0.28501 ];
+     [ udwr$6*1.29528 ];
+     [ udwr$7*1.80549 ];
+     [ udwr$8*2.31276 ];
+     [ udwr$9*2.78510 ];
+
+     g@1;
+     s1*0.35260;
+
+
+
+     Beginning Time:  22:57:15
+        Ending Time:  22:57:15
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2018 Muthen & Muthen

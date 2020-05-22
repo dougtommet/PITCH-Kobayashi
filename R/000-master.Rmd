@@ -1,0 +1,41 @@
+---
+title: "PITCH - Analyses for Kobayashi Paper"
+author: "Doug Tommet"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    keep_md: yes
+    theme: cerulean
+    toc: yes
+    toc_float: yes
+  word_document: default
+---
+
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+source(here::here("R", "002-folder-paths-and-options.R"))
+source(here::here("R", "005-functions-and-libraries.R"))
+
+source(here::here("R", "015-read-data.R"))
+source(here::here("R", "020-item-management.R"))
+source(here::here("R", "030-setup-linkage.R"))
+
+source(here::here("R", "275-model-fits.R"))
+
+
+```
+
+```{r, child=here("R", "001-intro.Rmd")}
+```
+
+
+```{r, child=here("R", "275-model-fits.Rmd")}
+```
+
+```{r, child=here("R", "275-model-fits-explainer.Rmd")}
+```
+
+```{r, child=here("R", "999-R-session-info.Rmd")}
+```
+

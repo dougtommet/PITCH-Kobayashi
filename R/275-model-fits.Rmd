@@ -1,0 +1,194 @@
+
+
+```{r}
+rm(list = setdiff(ls(), lsf.str())[!(setdiff(ls(), lsf.str()) %in% "params")])
+source(here::here("R", "002-folder-paths-and-options.R"))
+
+pitch.study <-         readRDS(file=path(r.objects.folder, "015_pitch_study.rds"))
+pitch.items <-         readRDS(file=path(r.objects.folder, "015_pitch_items.rds"))
+pitch.study.nested <-  readRDS(file=path(r.objects.folder,
+                                         "030_pitch_study_nested.rds"))
+pitch.study.results <- readRDS(file=path(r.objects.folder,
+                                         "275_pitch_study_results.rds"))
+```
+
+```{r}
+studies.to.present <- c(20, 21, 22, 29, 7, 30, 31, 32, 18, 34, 33, 35, 36, 37, 38, 39, 44)
+
+```
+
+# Tables
+
+## Table 3
+
+This table contains all the fit statistics.  In the paper, we are going to limit them to CFI, RMSEA, SRMR, and N large residuals.  But, until then, it is good to keep them all in one place.  I think we decided on reporting the number of "large" residuals, but am including the number of "small" and "medium" in case we change our minds.
+
+```{r}
+foo <- pitch.study %>%
+  select(study_name_short, study_name_nice)
+
+pitch.study.results %>%
+  left_join(foo, by = "study_name_short") %>%
+  mutate(items_n             = map_dbl(pitch.items.subset, nrow),
+         item_df_wide_n      = map_dbl(item_df_wide_n, pluck),
+         count.cor.obs.neg   = map_dbl(cor.obs.neg, pluck),
+         count.cor.obs.pos   = map_dbl(cor.obs.pos, pluck),
+         
+         rmsea.uni           = map_dbl(fit.stats.uni.model, pluck("RMSEA_Estimate")),
+         cfi.uni             = map_dbl(fit.stats.uni.model, pluck("CFI")),
+         tli.uni             = map_dbl(fit.stats.uni.model, pluck("TLI")),
+         srmr.uni            = map_dbl(fit.stats.uni.model, pluck("SRMR")),
+         count.uni.small.q   = map_dbl(count.uni.small.q, pluck),
+         count.uni.med.q     = map_dbl(count.uni.med.q, pluck),
+         count.uni.large.q   = map_dbl(count.uni.large.q, pluck),
+         count.uni.2.stand   = map_dbl(count.uni.2.stand, pluck),
+
+         rmsea.bi            = map_dbl(fit.stats.bi.model, pluck("RMSEA_Estimate")),
+         cfi.bi              = map_dbl(fit.stats.bi.model, pluck("CFI")),
+         tli.bi              = map_dbl(fit.stats.bi.model, pluck("TLI")),
+         srmr.bi             = map_dbl(fit.stats.bi.model, pluck("SRMR")),
+         count.bi.small.q    = map_dbl(count.bi.small.q, pluck),
+         count.bi.med.q      = map_dbl(count.bi.med.q, pluck),
+         count.bi.large.q    = map_dbl(count.bi.large.q, pluck),
+         count.bi.2.stand    = map_dbl(count.bi.2.stand, pluck),
+         ) %>%
+  filter(study_wave_number %in% studies.to.present) %>%
+  select(study_name_nice, item_df_wide_n, items_n, 
+         count.cor.obs.neg, count.cor.obs.pos,
+         count.uni.small.q, count.uni.med.q, count.uni.large.q, count.uni.2.stand,
+         srmr.uni, cfi.uni, tli.uni, rmsea.uni,
+         count.bi.small.q, count.bi.med.q, count.bi.large.q, count.bi.2.stand,
+         srmr.bi, cfi.bi, tli.bi, rmsea.bi) %>%
+  arrange(study_name_nice) %>%
+  gt(rowname_col = "study_name_nice") %>%
+  tab_spanner(label = "Single factor model fits", 
+              columns = vars(count.uni.small.q, count.uni.med.q, 
+                             count.uni.large.q, count.uni.2.stand,
+                             srmr.uni, cfi.uni, tli.uni, rmsea.uni)) %>%
+  tab_spanner(label = "Bifactor model fits", 
+              columns = vars(count.bi.small.q, count.bi.med.q, 
+                             count.bi.large.q, count.bi.2.stand, 
+                             srmr.bi, cfi.bi, tli.bi, rmsea.bi)) %>%
+  cols_label(item_df_wide_n    = "N participants", 
+             items_n           = "N items", 
+             count.cor.obs.neg = "N neg obs correlations",
+             count.cor.obs.pos = "N pos obs correlations", 
+             srmr.uni          = "SRMR", 
+             count.uni.small.q = "N small residuals",
+             count.uni.med.q   = "N medium residuals",
+             count.uni.large.q = "N large residuals",
+             count.uni.2.stand = "N large standardized residuals",
+             cfi.uni           = "CFI", 
+             tli.uni           = "TLI", 
+             rmsea.uni         = "RMSEA",
+             srmr.bi           = "SRMR", 
+             count.bi.small.q = "N small residuals",
+             count.bi.med.q   = "N medium residuals",
+             count.bi.large.q = "N large residuals", 
+             count.bi.2.stand = "N large standardized residuals",
+             cfi.bi            = "CFI", 
+             tli.bi            = "TLI", 
+             rmsea.bi          = "RMSEA") %>%
+  tab_header(title = "Table 3. Single-factor and bifactor model fit statistics, US Health and Retirement Study and International Partner Studies") %>%
+  tab_footnote(footnote = "confirmatory fit index",
+               locations = cells_column_labels(columns = vars(cfi.uni, cfi.bi))) %>%
+  tab_footnote(footnote = "Tucker-Lewis index",
+               locations = cells_column_labels(columns = vars(tli.uni, tli.bi))) %>%
+  tab_footnote(footnote = "root mean square error of approximation",
+               locations = cells_column_labels(columns = vars(rmsea.uni, 
+                                                              rmsea.bi))) %>%
+  tab_footnote(footnote = "standardized root mean squared residual",
+               locations = cells_column_labels(columns = vars(srmr.uni, srmr.bi))) %>%
+  tab_footnote(footnote = "N small residuals (Cohen's q > 0.1)",
+               locations = cells_column_labels(columns = vars(count.uni.small.q,
+                                                              count.bi.small.q))) %>%
+  tab_footnote(footnote = "N medium residuals (Cohen's q > 0.3)",
+               locations = cells_column_labels(columns = vars(count.uni.med.q,
+                                                              count.bi.med.q))) %>%
+  tab_footnote(footnote = "N large residuals (Cohen's q > 0.5)",
+               locations = cells_column_labels(columns = vars(count.uni.large.q,
+                                                              count.bi.large.q))) %>%
+  tab_footnote(footnote = "N standardized residuals > 2",
+               locations = cells_column_labels(columns = vars(count.uni.2.stand,
+                                                              count.bi.2.stand))) %>%
+  tab_footnote(footnote = "N polychoric correlations < 0 or NA (indicative of empty cell between item pairs, and warrants follow-up)",
+               locations = cells_column_labels(columns = vars(count.cor.obs.neg))) %>%
+  tab_footnote(footnote = "N polychoric correlations > 0 (denominator for effect sizes)",
+               locations = cells_column_labels(columns = vars(count.cor.obs.pos))) %>%
+  tab_options(table.font.size = pct(80))
+
+```  
+
+## Supplemental Table 1
+
+```{r}  
+foo <- pitch.study %>%
+  select(study_name_short, study_name_nice)
+goo <- pitch.items %>%
+  select(item, item_label)
+my_count_fn <- function(x) {
+  sum(!is.na(x))
+}
+
+pitch.study.nested %>%
+  left_join(foo, by = "study_name_short") %>%
+  filter(study_wave_number %in% studies.to.present) %>%
+  mutate(item_df_wide              = map(pitch.long,  get_wide_item_df)) %>%
+  select(study_name_nice, item_df_wide) %>%
+  unnest(cols = c(item_df_wide)) %>%
+  group_by(study_name_nice) %>%
+  summarize_all( ~sum(!is.na(.))) %>%
+  pivot_longer(cols = starts_with("U"), names_to = "item", values_to = "N") %>%
+  mutate(N = case_when(N==0 ~NA_integer_,
+                        TRUE ~N)) %>%
+  left_join(goo, by = "item") %>%
+  group_by(item) %>%
+  mutate(n.items.across.study = sum(!is.na(N))) %>%
+  ungroup() %>%
+  pivot_wider(id = c(item_label, item, n.items.across.study),
+              names_from = study_name_nice, values_from = N) %>%
+  select(-item) %>%
+  gt(rowname_col = "item_label") %>%
+    fmt_missing(columns = everything(), missing_text = "") %>%
+    summary_rows(columns = everything(),
+                 fns = list("Number of items" = "my_count_fn")) %>%
+    cols_move_to_end(vars(n.items.across.study)) %>%
+    cols_label(n.items.across.study = "Number of study sites with the item") %>%
+    tab_options(table.font.size = pct(80))
+
+  
+
+```
+
+## Supplemental Table 2
+
+```{r}
+foo <- pitch.study %>%
+  select(study_name_short, study_name_nice)
+goo <- pitch.items %>%
+  select(item, item_label)
+
+pitch.study.results %>%
+  filter(study_wave_number %in% studies.to.present) %>%
+  left_join(foo, by = "study_name_short") %>%
+  select(study_name_nice, stand.fl.bi) %>%
+  unnest(cols = c(stand.fl.bi))  %>%
+  rename(item = param) %>%
+  left_join(goo, by = "item") %>%
+  pivot_longer(cols = c("G", starts_with("S", ignore.case = FALSE)), 
+               names_to ="param", values_to = "loading") %>%
+  filter(loading != 0) %>%
+  pivot_wider(id = c(item, item_label, param), 
+              names_from = study_name_nice, values_from = loading) %>%
+  arrange(param, item) %>%
+  select(-item) %>%
+  gt(rowname_col = "item_label") %>%
+    tab_row_group(group = "Memory sub-factors",
+                  rows = str_detect(param, "S")) %>%
+    tab_row_group(group = "General factor",
+                  rows = param == "G") %>%
+    cols_hide(vars(param)) %>%
+    fmt_missing(columns = everything(), missing_text = "") %>%
+    tab_options(table.font.size = pct(80))
+
+```  

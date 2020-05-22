@@ -1,0 +1,351 @@
+
+
+```{r}
+rm(list = setdiff(ls(), lsf.str())[!(setdiff(ls(), lsf.str()) %in% "params")])
+source(here::here("R", "002-folder-paths-and-options.R"))
+
+
+pitch.study.results <- readRDS(file=path(r.objects.folder,
+                                         "275_pitch_study_results.rds"))
+```
+
+```{r}
+studies.to.present <- c(20, 21, 22, 29, 7, 30, 31, 32, 18, 34, 33, 35, 36, 37, 38, 39, 44)
+
+```
+
+# Details for the calculation of "large/standardized/normalized" residuals
+
+This section details how I calculated the item residuals, and how we determine whether the residual is "large".  The basis for calculating the residuals is to get the observed correlation matrix and the model implied correlation matrix, and then take the difference.  This difference may or may not be divided by some value to standardize it.  Calculating the observed and model implied correlations was straight forward.  During a 2020-04-30 meeting, we realized we had issues with the other parts of the process. This is described in Rich's email below.  In brief, we tried to use Bollen's (1989) equation for calculating normalized residuals.  However, Bollen used covariances instead of correlations, and we also didn't know what values to use for standardization.  So, we're taking a step back in how we approach things.  We'll take the difference between Fisher transformations of the correlations, which is the same as Cohen's q.  We'll ues Cohen's thresholds for a large difference.
+
+
+## Email from Rich
+
+From Rich Jones email 2020-04-30, following that day's discussion of standardized residuals:
+
+>Hi All,
+>
+>Doug and I continued talking after you guys dropped off. Here is where I think we ended up.
+>
+>**We don’t really know how to compute standardized residuals for correlation matrices with categorical dependent variables.**
+>
+>I don’t think we should feel to bad about that, because Mplus/Bengt Muthén does not either. Otherwise, Mplus would provide them in Mplus output. Bengt has promised these since 2007 in Mplus discussion, but they are still not available. Lavaan does not give them either. I think that it is not straightforward to compute these residuals, and involves some ad hocery that is not something that responsible statisticians want to encode in software.
+>
+>**Given that, what can we compute without controversy or questionable statistics? Residuals**
+>
+>It is a relatively simple matter to compute residuals. One the one hand, we could simply compute differences in model-implied correlation coefficients and sample correlation coefficients. But life is not that simple. We don’t just compute differences in correlation coefficients because correlation coefficients are not continuous normal variables. They are truncated variables. To address this, what is done is to compute differences in Fisher’s z-transformed correlation coefficients. This transformation is involved in all statistical maneuvers involving correlations (i.e., getting P-values for testing the hypothesis that the correlation is different from 0, or getting a confidence interval on a correlation.
+>
+>**What’s a large residual?**
+>
+>Not sure, but Jacob Cohen in his classic text that defined all effect sizes (1988, Statistical power analysis for the behavioral sciences. Hillsdale, New Jersey: Lawrence Erlbaum Associates) described small, medium and large effects for differences in correlations expressed as differences in Fisher’s z-transformed correlation coefficients (he calls the effect size q, so we can call it Cohen’s q). This is probably as good as any other definition of what a large residual is, and it would be a q greater than .5 (or less than -.5). 
+>
+>HOWEVER, Alternatively, we could define “large residuals” as differences in Fisher’s z-transformed correlation coefficients that are not trivial (i.e., greater than q=.1 (or less than -.1)). The rationale being that what makes a large residual should be held to a different standard than what makes a large difference in correlation coefficients in general.
+>
+>**Can we standardize q?**
+>
+>Yes we can. The standard error is sqrt(1/(N-3)) for Fisher’s z. Cohen (1988) explains this too. 
+>
+>So we can divide Cohen’s q by $\sqrt{1/(N-3)}$ and we’ve got a z-statistic, which matches what Mplus calls a standardized residual.
+>
+>**Are we back where we started?**
+>
+>Doug showed us Bollen’s equation:
+>
+>$$
+\frac{\sigma_{ij}^{(s)} - \sigma_{ij}^{(m)}}{\sqrt{(\sigma_{ii}^{(m)}\sigma_{jj}^{(m)} + (\sigma_{ij}^{(m)})^2)/N}}
+>$$
+>
+>The general form of this let be:
+>
+>$\frac{D}{\sqrt{A/B}}$
+>
+>Bollen wrote his definition for covariances. Covariances ($\sigma_{ij}$) are not directly identified in the case of ordinal dependent variables. But we can get polychoric correlation coefficients easily. Therefore what I am proposing using for a numerator of the residual (Cohen’s q) is only slight different from what Doug was using (difference in correlation coefficients). I think there’s a good reason and precedent for using differences in Fisher’s z transform instead of differences in correlation coefficients.
+>
+>Bollen’s denominator, if we use 1 for the variance of the two variables ($\sigma_{ii}$, $\sigma_{jj}$), and this is appropriate because we are dealing in a standardized metric since we are dealing with correlation coefficients) is $\sqrt{(1+(r_{ij}^{(m)})^2)/N}$. If we use the single-sample standard error for Cohen’s q, the values are nearly the same. 
+>
+>So indeed I think we are back where we started with standardized residuals. We’re talking about the same thing as Bollen, but we’re using some ad hoc methods to accommodate the categorical dependent variables. Because covariances are not accessible, we define the residual as the difference in Fisher’s z-transformed correlation coefficients (AKA Cohen’s q).
+>
+>We can standardize using the standard error for the difference in Fisher’s z-transformed correlation coefficients ($\sqrt{1/(N-3)}$).
+>
+>But I think we should not standardize and only look at the Cohen’s q and use Cohen’s definition of a large difference to define large residuals. And we can discuss whether a large residual should be greater than .1 or .5, or something else, in absolute terms.
+
+
+
+## Calculation of observed item correlation
+
+The observed correlations come from the pairwise complete polychoric correlations. Correlations that were negative or missing are flagged, so that those item pairs can be further examined.
+
+## Calculation of model implied item correlation
+
+The model implied correlations come from applying Wright's rule to the factor model.  The math below is a typical example of the bifactor model in HRS. The first column of the matrix is the factor loadings of the general factor, the second column (and third column if necessary) are the sub-factors loadings.
+
+$$
+\begin{bmatrix}
+\lambda_{g1} & \lambda_{s11}  \\
+\lambda_{g2} & \lambda_{s12}  \\
+\lambda_{g3} & 0  \\
+\lambda_{g4} & 0  \\
+\lambda_{g5} & 0 
+\end{bmatrix}
+\begin{bmatrix}
+\lambda_{g1}  & \lambda_{g2}  & \lambda_{g3} & \lambda_{g4} & \lambda_{g5} \\
+\lambda_{s11} & \lambda_{s12} & 0            & 0            &  0  
+\end{bmatrix}
+=
+\begin{bmatrix}
+\lambda_{g1}\lambda_{g1} + \lambda_{s11}\lambda_{s11} \\
+\lambda_{g2}\lambda_{g1} + \lambda_{s12}\lambda_{s11} & 
+\lambda_{g2}\lambda_{g2} + \lambda_{s12}\lambda_{s12}   \\
+\lambda_{g3}\lambda_{g1}  &
+\lambda_{g3}\lambda_{g2}  &
+\lambda_{g3}\lambda_{g3}   \\
+\lambda_{g4}\lambda_{g1} &
+\lambda_{g4}\lambda_{g2} &
+\lambda_{g4}\lambda_{g3} & 
+\lambda_{g4}\lambda_{g4} \\
+\lambda_{g5}\lambda_{g1} &
+\lambda_{g5}\lambda_{g2} & 
+\lambda_{g5}\lambda_{g3} &  
+\lambda_{g5}\lambda_{g4} &              
+\lambda_{g5}\lambda_{g5} \\            
+\end{bmatrix}
+$$
+
+
+## Calculation of Fisher's z transformation
+
+This is the equation for Fisher's z transformation:
+
+$$
+z = .5 * ln(\frac{1+r}{1-r}) = arctanh(r)
+$$
+
+## Calculation of Cohen's q
+
+This is the equation for Cohen's q:
+
+$$
+q = z_{obs} - z_{model}
+$$
+
+## Calculation of standardize q
+
+$$
+q_{standardized} = \frac{q}{\sqrt{1/(N-3)}}
+$$
+
+# Applied example of calculating residuals for HRS-CODA
+
+## Observed correlation
+
+This is the matrix of pairwise correlations.
+
+```{r}
+
+o <- pitch.study.results[["cor.obs"]][[1]] 
+o[upper.tri(o, diag=TRUE)] <- NA
+o <- as_tibble(o, rownames = "item")
+
+gt(o, rowname_col = "item") %>%
+  fmt_number(columns = everything(), decimals = 3) %>%
+  fmt_missing(columns = everything(), missing_text = "") %>%
+  tab_header(title = "Pairwise Polychoric Item Correlation Matrix - HRS-CODA") %>%
+  tab_options(table.font.size = pct(80))
+
+```
+
+The correlation matrix after Fisher's z transformation
+
+```{r}
+
+o <- pitch.study.results[["cor.obs.z"]][[1]] 
+o[upper.tri(o, diag=TRUE)] <- NA
+o <- as_tibble(o, rownames = "item")
+
+gt(o, rowname_col = "item") %>%
+  fmt_number(columns = everything(), decimals = 3) %>%
+  fmt_missing(columns = everything(), missing_text = "") %>%
+  tab_header(title = "Fisher transformed Pairwise Polychoric Item Correlation Matrix - HRS-CODA") %>%
+  tab_options(table.font.size = pct(80))
+
+```
+
+## Model correlation
+
+These are the standardized factor loadings.
+
+```{r}
+pitch.study.results[["stand.fl.bi"]][[1]] %>%
+  gt(rowname_col = "param")  %>%
+  tab_header(title = "Standardized factor loadings from bifactor model - HRS-CODA") %>%
+  tab_options(table.font.size = pct(80))
+```
+
+The resulting correlation matrix.
+
+```{r}
+
+m <- pitch.study.results[["cor.bi.model"]][[1]] 
+m[upper.tri(m, diag=TRUE)] <- NA
+m <- as_tibble(m, rownames = "item")
+
+gt(m, rowname_col = "item") %>%
+  fmt_number(columns = everything(), decimals = 3) %>%
+  fmt_missing(columns = everything(), missing_text = "") %>%
+  tab_header(title = "Bifactor Model Item Correlation Matrix - HRS-CODA") %>%
+  tab_options(table.font.size = pct(80))
+
+```
+
+The correlation matrix after Fisher's z transformation
+
+```{r}
+
+m <- pitch.study.results[["cor.bi.model.z"]][[1]] 
+m[upper.tri(m, diag=TRUE)] <- NA
+m <- as_tibble(m, rownames = "item")
+
+gt(m, rowname_col = "item") %>%
+  fmt_number(columns = everything(), decimals = 3) %>%
+  fmt_missing(columns = everything(), missing_text = "") %>%
+  tab_header(title = "Fisher transformed Bifactor Model Item Correlation Matrix - HRS-CODA") %>%
+  tab_options(table.font.size = pct(80))
+
+```
+The sample size for HRS CODA is N = `r  pitch.study.results[["item_df_wide_n"]][[1]] `.
+
+
+## Cohen's q
+
+
+
+```{r}
+my_highlight_fn <- function(my_gt, v, thres, cell_color) {
+  y <- sym(v)
+  my_gt %>%
+    gt::tab_style(
+      style = cell_fill(color = cell_color),
+      locations = cells_body(
+        columns = vars({{v}}),
+        rows = abs(!!y) >= thres))
+}
+
+my_highlight_effect_sizes_fn <- function(df, my_title) {
+  itemlist <- df %>% pull(item)
+  # Create the main table to be used as starting point for the highlighting
+  my_tab_1 <- df %>%
+    gt(rowname_col = "item") %>%
+      fmt_number(columns = everything(), decimals = 3) %>%
+      fmt_missing(columns = everything(), missing_text = "") %>%
+      tab_header(title = my_title) %>%
+      tab_options(table.font.size = pct(80)) %>%
+      tab_source_note("Highlighted cells refer to small (.1), 
+                      medium (.3) and large (.5) differences. Orange cells are
+                      negative or missing polychoric correlations.")
+  
+  # Highlight "small" effect sizes
+  my_tab_2 <- purrr::reduce(.x = itemlist,
+                .f = function(prev, .x) {
+                  prev %>% my_highlight_fn(v = {{.x}},
+                                           thres = .1,
+                                           cell_color = "#ece7f2")},
+                .init = my_tab_1
+                )
+  
+  # Highlight "medium" effect sizes
+  my_tab_3 <- purrr::reduce(.x = itemlist,
+                .f = function(prev, .x) {
+                  prev %>% my_highlight_fn(v = {{.x}},
+                                           thres = .3,
+                                           cell_color = "#a6bddb")},
+                .init = my_tab_2
+                )
+  
+  # Highlight "large" effect sizes
+  my_tab_4 <- purrr::reduce(.x = itemlist,
+                .f = function(prev, .x) {
+                  prev %>% my_highlight_fn(v = {{.x}},
+                                           thres = .5,
+                                           cell_color = "#2b8cbe")},
+                .init = my_tab_3
+                )
+  # Highlight the NA's
+  my_tab_5 <- purrr::reduce(.x = itemlist,
+                .f = function(prev, .x) {
+                  prev %>% my_highlight_fn(v = {{.x}},
+                                           thres = 999,
+                                           cell_color = "orange")},
+                .init = my_tab_4
+                )
+  my_tab_5
+}
+q <- pitch.study.results[["cor.bi.model.q"]][[1]] 
+q[is.na(q)] <- -999
+q[upper.tri(q, diag=TRUE)] <- NA
+q <- as_tibble(q, rownames = "item")
+
+my_highlight_effect_sizes_fn(q, "Item residual matrix - HRS-CODA")
+```
+
+## Standardized residuals
+
+```{r}
+
+my_highlight_standardized_residual_fn <- function(df, my_title) {
+  itemlist <- df %>% pull(item)
+  # Create the main table to be used as starting point for the highlighting
+  my_tab_1 <- df %>%
+    gt(rowname_col = "item") %>%
+      fmt_number(columns = everything(), decimals = 3) %>%
+      fmt_missing(columns = everything(), missing_text = "") %>%
+      tab_header(title = my_title) %>%
+      tab_options(table.font.size = pct(80)) %>%
+      tab_source_note("Highlighted cells refer to standardized 
+                      values greater than 2.")
+  
+  # Highlight "small" effect sizes
+  my_tab_2 <- purrr::reduce(.x = itemlist,
+                .f = function(prev, .x) {
+                  prev %>% my_highlight_fn(v = {{.x}},
+                                           thres = 2,
+                                           cell_color = "#2b8cbe")},
+                .init = my_tab_1
+                )
+  my_tab_2
+}
+
+m <- pitch.study.results[["cor.bi.model.q.stand"]][[1]] 
+m[upper.tri(m, diag=TRUE)] <- NA
+m <- as_tibble(m, rownames = "item")
+
+my_highlight_standardized_residual_fn(m, "Standardized Residuals - HRS-CODA")
+```
+
+# Listing the residual matrices for the bifactor models.
+
+```{r}
+
+my_fx <- function(mat) {
+  mat[is.na(mat)] <- -999
+  mat[upper.tri(mat, diag=TRUE)] <- NA
+  mat <- as_tibble(mat, rownames = "item")
+  mat
+}
+pitch.study.results <- pitch.study.results %>%
+  mutate(cor.bi.model.q.df = map(cor.bi.model.q, my_fx),
+         cor.bi.model.q.gt.title = str_c("Bifactor model item residual matrix - ",
+                                         study_name_short),
+         cor.bi.model.q.gt = map2(cor.bi.model.q.df, cor.bi.model.q.gt.title,
+                                  ~my_highlight_effect_sizes_fn(df = .x, my_title = .y)))
+
+
+# foo[["cor.bi.model.q.gt"]][[1]]
+
+
+```
+
+```{r, results='asis'}
+pitch.study.results %>%
+  filter(study_wave_number %in% studies.to.present) %>%
+  pull("cor.bi.model.q.gt")
+```
