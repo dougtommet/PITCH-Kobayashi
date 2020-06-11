@@ -1,6 +1,6 @@
 Mplus VERSION 8.1 (Mac)
 MUTHEN & MUTHEN
-04/23/2020  10:56 PM
+05/27/2020  10:28 PM
 
 INPUT INSTRUCTIONS
 
@@ -153,7 +153,7 @@ CFI/TLI
 
 Chi-Square Test of Model Fit for the Baseline Model
 
-          Value                          81898.557
+          Value                          81898.439
           Degrees of Freedom                     6
           P-Value                           0.0000
 
@@ -367,9 +367,9 @@ MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
 
 
 
-     Beginning Time:  22:56:25
-        Ending Time:  22:56:25
-       Elapsed Time:  00:00:00
+     Beginning Time:  22:28:16
+        Ending Time:  22:28:17
+       Elapsed Time:  00:00:01
 
 
 

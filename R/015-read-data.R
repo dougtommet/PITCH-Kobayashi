@@ -11,6 +11,40 @@ pitch.lookup.wave <-  readRDS(file = path(r.objects.folder.data.management, "015
 # saveRDS(pitch.items,        file=path(r.objects.folder, "015_pitch_items.rds"))
 # saveRDS(pitch.study,        file=path(r.objects.folder, "015_pitch_study.rds"))
 
+###############
+### Using only the new participants at MHAS wave 3
+
+# Get the id's for the participants that had first visit at wave 3
+id.mhas.wave3.first.visit <- pitch.long %>%
+  filter(study_wave_number %in% c(16, 17, 18, 19)) %>%
+  select(id, study_wave_number, wave) %>%
+  distinct() %>%
+  arrange(id, wave) %>%
+  group_by(id) %>%
+  mutate(visit_number = row_number(),
+         wave3_first_visit = wave==3 & visit_number==1) %>%
+  ungroup() %>%
+  filter(wave3_first_visit) 
+
+# Get the MHAS W3 data
+mhas.w3.long <- pitch.long %>%
+  filter(study_wave_number %in% c(18))
+
+# Merge in the indicator for wave 3 is first visit and filter to those participants
+mhas.w3.long.first.visit <- mhas.w3.long %>%
+  left_join(id.mhas.wave3.first.visit, by = c("id" = "id", 
+                                              "study_wave_number" = "study_wave_number",
+                                              "wave" = "wave")) %>%
+  filter(wave3_first_visit==TRUE) %>%
+  select(-visit_number, -wave3_first_visit)
+
+# Get all the pitch data, drop MHAS wave 3, then add back in the wave 3 first participants
+pitch.long <- pitch.long %>%
+  filter(!study_wave_number %in% c(18)) %>%
+  bind_rows(mhas.w3.long.first.visit)
+
+###################
+
 pitch.study.tmp <- pitch.lookup.wave %>%
   select(study_wave_number, study_name_short_w) %>%
   rename(study_name_short = study_name_short_w)
